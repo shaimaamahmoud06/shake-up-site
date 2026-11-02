@@ -1,0 +1,85 @@
+/* 01-base.css — page-wide defaults: self-hosted fonts, background, text colour, Arabic rules.
+   Logical properties (inline-start/end) so RTL and LTR both work. No motion. */
+
+/* ---------- self-hosted fonts (assets/fonts/, listed in assets/MANIFEST.md) ----------
+   font-display: swap = text shows at once in a system font, then swaps when the file arrives.
+   unicode-range = a phone only downloads the Arabic or Latin file when the page uses those letters.
+   The two Baloo files are variable fonts: one file covers every allowed weight. */
+@font-face {
+  font-family: 'Baloo Bhaijaan 2'; font-style: normal; font-weight: 700 800; font-display: swap;
+  src: url('../../assets/fonts/baloo-bhaijaan-2-arabic.woff2') format('woff2');
+  unicode-range: U+0600-06FF, U+0750-077F, U+0870-08FF, U+200C-200E, U+2010-2011, U+204F, U+2E41, U+FB50-FDFF, U+FE70-FEFC;
+}
+@font-face {
+  font-family: 'Baloo Bhaijaan 2'; font-style: normal; font-weight: 700 800; font-display: swap;
+  src: url('../../assets/fonts/baloo-bhaijaan-2-latin.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: 'Baloo 2'; font-style: normal; font-weight: 600 800; font-display: swap;
+  src: url('../../assets/fonts/baloo-2-latin.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: 'Tajawal'; font-style: normal; font-weight: 400; font-display: swap;
+  src: url('../../assets/fonts/tajawal-400-arabic.woff2') format('woff2');
+  unicode-range: U+0600-06FF, U+0750-077F, U+0870-08FF, U+200C-200E, U+2010-2011, U+204F, U+2E41, U+FB50-FDFF, U+FE70-FEFC;
+}
+@font-face {
+  font-family: 'Tajawal'; font-style: normal; font-weight: 400; font-display: swap;
+  src: url('../../assets/fonts/tajawal-400-latin.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: 'Tajawal'; font-style: normal; font-weight: 500; font-display: swap;
+  src: url('../../assets/fonts/tajawal-500-arabic.woff2') format('woff2');
+  unicode-range: U+0600-06FF, U+0750-077F, U+0870-08FF, U+200C-200E, U+2010-2011, U+204F, U+2E41, U+FB50-FDFF, U+FE70-FEFC;
+}
+@font-face {
+  font-family: 'Tajawal'; font-style: normal; font-weight: 500; font-display: swap;
+  src: url('../../assets/fonts/tajawal-500-latin.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: 'Tajawal'; font-style: normal; font-weight: 700; font-display: swap;
+  src: url('../../assets/fonts/tajawal-700-arabic.woff2') format('woff2');
+  unicode-range: U+0600-06FF, U+0750-077F, U+0870-08FF, U+200C-200E, U+2010-2011, U+204F, U+2E41, U+FB50-FDFF, U+FE70-FEFC;
+}
+@font-face {
+  font-family: 'Tajawal'; font-style: normal; font-weight: 700; font-display: swap;
+  src: url('../../assets/fonts/tajawal-700-latin.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  /* the hero's one line only (owner's choice, 2 Nov 2026); the owner's own copy of the Google font, OFL */
+  font-family: 'Almarai'; font-style: normal; font-weight: 700; font-display: swap;
+  src: url('../../assets/fonts/almarai-700.ttf') format('truetype');
+}
+
+/* ---------- page defaults ---------- */
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; color-scheme: light; background: var(--bg); }
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--font-ar);
+  font-weight: var(--fw-regular);
+  font-size: var(--fs-base);
+  line-height: var(--lh-body);
+  letter-spacing: var(--ls-ar);
+}
+:root:lang(en) body { font-family: var(--font-latin); line-height: var(--lh-latin); }
+
+/* Headlines use the display font (English pages: Baloo 2). Sizes stay with each component. */
+h1, h2, h3 { font-family: var(--font-display); font-weight: var(--fw-bold); line-height: var(--lh-display); }
+/* English headings use Baloo 2 — only headings that are themselves English (an Arabic name inside the English page keeps the display font). */
+h1:lang(en), h2:lang(en), h3:lang(en) { font-family: var(--font-latin); }
+
+/* Arabic text never gets letter-spacing, even inside the English page. */
+[lang="ar"] { letter-spacing: var(--ls-ar); }
+
+/* Form controls inherit the page font instead of the system one. */
+button, input, select, textarea { font-family: inherit; }
+
+.noscript { padding: var(--space-4); }

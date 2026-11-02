@@ -1,0 +1,254 @@
+/* 90-motion.css — THE motion layer. Delete this file (and src/js/motion/) and the site still works:
+   every element below already has a complete still look in its own component file.
+   Only runs for people who have not asked their phone for less motion. Transform/colour only. */
+
+@media (prefers-reduced-motion: no-preference) {
+
+  /* ---------- clock (P05; reworked 2 Nov 2026) ----------
+     One lap = --dur-clock (~12 s), 12 ticks: the second hand holds, then springs forward one hour mark
+     with a small overshoot and settles; the light on the rim ticks with it. The 12 marks light pink →
+     orange one after another as the hand reaches them and swell a little. The minute and hour hands
+     glide. Every hour is a Shake Up hour. */
+  .su-clock__second,
+  .su-clock__arc { animation: su-clock-tick var(--dur-clock) linear infinite; }
+  .su-clock__minute { animation: su-clock-turn calc(var(--dur-clock) * 60) linear infinite; }
+  .su-clock__hour { animation: su-clock-turn calc(var(--dur-clock) * 720) linear infinite; }
+  .su-clock__marker {
+    animation: su-clock-glow var(--dur-clock) linear infinite;
+    animation-delay: calc(var(--dur-clock) / 12 * var(--i) - var(--dur-clock) / 12 * 0.06);
+  }
+}
+
+@keyframes su-clock-turn {
+  from { transform: rotate(var(--_a)); }
+  to { transform: rotate(calc(var(--_a) + 360deg)); }
+}
+@keyframes su-clock-glow {
+  0% { stroke: var(--pink); stroke-width: 3.8; }
+  12% { stroke: var(--orange); stroke-width: 3.2; }
+  40%, 100% { stroke: var(--clock-ink-2); stroke-width: 2.6; }
+}
+@keyframes su-clock-tick {
+  0% { transform: rotate(var(--_a)); }
+  6.67% { transform: rotate(calc(var(--_a) + 0deg)); animation-timing-function: cubic-bezier(0.5, 0, 0.75, 0); }
+  7.50% { transform: rotate(calc(var(--_a) + 35deg)); animation-timing-function: ease-in-out; }
+  8.00% { transform: rotate(calc(var(--_a) + 28deg)); animation-timing-function: ease-out; }
+  8.33% { transform: rotate(calc(var(--_a) + 30deg)); }
+  15.00% { transform: rotate(calc(var(--_a) + 30deg)); animation-timing-function: cubic-bezier(0.5, 0, 0.75, 0); }
+  15.83% { transform: rotate(calc(var(--_a) + 65deg)); animation-timing-function: ease-in-out; }
+  16.33% { transform: rotate(calc(var(--_a) + 58deg)); animation-timing-function: ease-out; }
+  16.67% { transform: rotate(calc(var(--_a) + 60deg)); }
+  23.33% { transform: rotate(calc(var(--_a) + 60deg)); animation-timing-function: cubic-bezier(0.5, 0, 0.75, 0); }
+  24.17% { transform: rotate(calc(var(--_a) + 95deg)); animation-timing-function: ease-in-out; }
+  24.67% { transform: rotate(calc(var(--_a) + 88deg)); animation-timing-function: ease-out; }
+  25.00% { transform: rotate(calc(var(--_a) + 90deg)); }
+  31.67% { transform: rotate(calc(var(--_a) + 90deg)); animation-timing-function: cubic-bezier(0.5, 0, 0.75, 0); }
+  32.50% { transform: rotate(calc(var(--_a) + 125deg)); animation-timing-function: ease-in-out; }
+  33.00% { transform: rotate(calc(var(--_a) + 118deg)); animation-timing-function: ease-out; }
+  33.33% { transform: rotate(calc(var(--_a) + 120deg)); }
+  40.00% { transform: rotate(calc(var(--_a) + 120deg)); animation-timing-function: cubic-bezier(0.5, 0, 0.75, 0); }
+  40.83% { transform: rotate(calc(var(--_a) + 155deg)); animation-timing-function: ease-in-out; }
+  41.33% { transform: rotate(calc(var(--_a) + 148deg)); animation-timing-function: ease-out; }
+  41.67% { transform: rotate(calc(var(--_a) + 150deg)); }
+  48.33% { transform: rotate(calc(var(--_a) + 150deg)); animation-timing-function: cubic-bezier(0.5, 0, 0.75, 0); }
+  49.17% { transform: rotate(calc(var(--_a) + 185deg)); animation-timing-function: ease-in-out; }
+  49.67% { transform: rotate(calc(var(--_a) + 178deg)); animation-timing-function: ease-out; }
+  50.00% { transform: rotate(calc(var(--_a) + 180deg)); }
+  56.67% { transform: rotate(calc(var(--_a) + 180deg)); animation-timing-function: cubic-bezier(0.5, 0, 0.75, 0); }
+  57.50% { transform: rotate(calc(var(--_a) + 215deg)); animation-timing-function: ease-in-out; }
+  58.00% { transform: rotate(calc(var(--_a) + 208deg)); animation-timing-function: ease-out; }
+  58.33% { transform: rotate(calc(var(--_a) + 210deg)); }
+  65.00% { transform: rotate(calc(var(--_a) + 210deg)); animation-timing-function: cubic-bezier(0.5, 0, 0.75, 0); }
+  65.83% { transform: rotate(calc(var(--_a) + 245deg)); animation-timing-function: ease-in-out; }
+  66.33% { transform: rotate(calc(var(--_a) + 238deg)); animation-timing-function: ease-out; }
+  66.67% { transform: rotate(calc(var(--_a) + 240deg)); }
+  73.33% { transform: rotate(calc(var(--_a) + 240deg)); animation-timing-function: cubic-bezier(0.5, 0, 0.75, 0); }
+  74.17% { transform: rotate(calc(var(--_a) + 275deg)); animation-timing-function: ease-in-out; }
+  74.67% { transform: rotate(calc(var(--_a) + 268deg)); animation-timing-function: ease-out; }
+  75.00% { transform: rotate(calc(var(--_a) + 270deg)); }
+  81.67% { transform: rotate(calc(var(--_a) + 270deg)); animation-timing-function: cubic-bezier(0.5, 0, 0.75, 0); }
+  82.50% { transform: rotate(calc(var(--_a) + 305deg)); animation-timing-function: ease-in-out; }
+  83.00% { transform: rotate(calc(var(--_a) + 298deg)); animation-timing-function: ease-out; }
+  83.33% { transform: rotate(calc(var(--_a) + 300deg)); }
+  90.00% { transform: rotate(calc(var(--_a) + 300deg)); animation-timing-function: cubic-bezier(0.5, 0, 0.75, 0); }
+  90.83% { transform: rotate(calc(var(--_a) + 335deg)); animation-timing-function: ease-in-out; }
+  91.33% { transform: rotate(calc(var(--_a) + 328deg)); animation-timing-function: ease-out; }
+  91.67% { transform: rotate(calc(var(--_a) + 330deg)); }
+  98.33% { transform: rotate(calc(var(--_a) + 330deg)); animation-timing-function: cubic-bezier(0.5, 0, 0.75, 0); }
+  99.17% { transform: rotate(calc(var(--_a) + 365deg)); animation-timing-function: ease-in-out; }
+  99.67% { transform: rotate(calc(var(--_a) + 358deg)); animation-timing-function: ease-out; }
+  100% { transform: rotate(calc(var(--_a) + 360deg)); }
+}
+
+
+/* ---------- cards: settle-in ----------
+   Owner, 2 Nov 2026 — replaces the pin → shrink (decision D1). That card was pinned (sticky) and
+   scaled + re-rounded by scroll position; being full-width, its edges showed as a frame around the
+   narrower menu rising over it, then vanished in one frame. Now nothing is pinned or tied to scroll:
+   the card's frame (box, colour, corners) never moves. motion/settle.js zooms the INNER layer in a
+   little while the card is still below the screen (data-settle="ready"), lets it settle to its
+   natural size as the card comes into view ("go": a transform transition, once), then removes the
+   attribute so the card is plain static layout again. The frame clips the zoom at its fixed corners.
+   The same settle runs on every category's image card and on the Mixes reel card (owner, 2 Nov):
+   each is a still frame with one inner layer (.su-settle).
+   To soften it on a phone, lower --settle-from first (e.g. 1.06 → 1.03). */
+@media (prefers-reduced-motion: no-preference) {
+  [data-settle] > .su-settle { will-change: transform; }
+  [data-settle="ready"] > .su-settle { transform: scale(var(--settle-from)); }
+  [data-settle="go"] > .su-settle { transition: transform var(--dur-settle) var(--ease-out); }
+}
+
+/* ---------- parallax (P13 · 2) ----------
+   A category header's photo drifts at "background rate": it moves a little slower than the page as
+   the card crosses the screen, inside the card's own frame (the frame clips it). The photo is made a
+   bit taller than the card, so its edges never show. Text never parallaxes: the name, count and
+   «تبدأ من» chip stay with the card. Placeholder headers (no photo yet) have nothing to drift. */
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    /* the card's journey across the screen drives it (the card clips, so it is its own scroll box:
+       the photo cannot use view() itself) */
+    .su-category-header { view-timeline: --su-photo block; }
+    .su-category-header__img {
+      inset-block: -10%;
+      block-size: 120%;
+      animation: su-drift linear both;
+      animation-timeline: --su-photo;
+      animation-range: cover;
+    }
+  }
+}
+
+@keyframes su-drift {
+  from { transform: translateY(-8%); }
+  to { transform: translateY(8%); }
+}
+
+/* ---------- hero fade ----------
+   The fade at the hero's bottom (hero.css) is hidden while the hero fills the screen and comes in over
+   the first part of scrolling away from it, so the hero blends into the blob below. Scrolling back up
+   takes it away again. */
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .su-hero { view-timeline: --su-hero block; }
+    .su-hero__frame::after {
+      animation: su-fade-in linear both;
+      animation-timeline: --su-hero;
+      animation-range: exit 0% exit 30%;
+    }
+  }
+}
+
+@keyframes su-fade-in {
+  from { opacity: 0; }
+}
+
+/* ---------- reveals (P13 · 3) ----------
+   motion/reveals.js adds .su-reveal as a category or branch card first comes on screen: it fades in,
+   once. A fade only, no rise: a timed slide while the page is being scrolled made the cards seem to
+   slip against the finger (owner, 1 Nov 2026). The base look is always fully visible (no opacity:0 anywhere): without the
+   script or this file nothing is hidden. On a category the CONTENTS fade, not the category, so its
+   solid cream background keeps covering a pinned world card behind it. */
+@media (prefers-reduced-motion: no-preference) {
+  .category.su-reveal > :not(.su-sticker),   /* a sticker keeps its own float */
+  .su-visit__branch.su-reveal { animation: su-appear var(--dur-slow) var(--ease-out) both; }
+}
+
+@keyframes su-appear {
+  from { opacity: 0; }
+}
+
+/* ---------- mixes reel ----------
+   motion/mixReel.js turns the reels. While they turn, the old mix's name and price dim; the landed
+   mix's name and price come up as the right reel stops. */
+@media (prefers-reduced-motion: no-preference) {
+  .su-mix-reel__result { transition: opacity var(--dur-slow) var(--ease-out); }
+  .su-mix-reel[data-spinning] .su-mix-reel__result { opacity: 0.3; }
+}
+
+/* ---------- hero: logo ↔ top bar, and its line ----------
+   Reaching page 2, the hero's small logo slides up out of sight as the top bar slides down in its
+   place (and the other way on the way back up): transform only, nothing fades to nothing. The hero's
+   line fades up softly once the clip is 3 s in (an entrance animation; its resting state is visible). */
+@media (prefers-reduced-motion: no-preference) {
+  .su-top-bar,
+  .su-hero-logo { transition: transform var(--dur-slow) var(--ease-out), visibility 0s linear 0s; }
+  :root[data-at-hero] .su-top-bar,
+  :root:not([data-at-hero]) .su-hero-logo { transition: transform var(--dur-slow) var(--ease-out), visibility 0s linear var(--dur-slow); }
+  .su-hero__line { animation: su-line-in var(--dur-slow) var(--ease-out) both; }
+  .su-hero[data-line="wait"] .su-hero__line { animation: none; }   /* fades up again each time the clip passes 3 s */
+}
+
+@keyframes su-line-in {
+  from { opacity: 0; transform: translateY(0.5rem); }
+}
+
+/* ---------- hero «scroll down» cue ----------
+   The mouse's wheel slides down and fades, over and over; a soft light runs across the words (the
+   shimmer). Both stay readable all the way through. The cue fades out once you start scrolling. */
+@media (prefers-reduced-motion: no-preference) {
+  .su-hero__wheel { animation: su-wheel 1.6s var(--ease-in-out) infinite; }
+  .su-hero__cue-text {
+    background: linear-gradient(100deg, color-mix(in srgb, var(--card) 70%, transparent) 30%, var(--card) 50%, color-mix(in srgb, var(--card) 70%, transparent) 70%);
+    background-size: 250% 100%;
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    text-shadow: none;   /* would show through the clipped letters; the drop-shadow keeps them readable */
+    filter: drop-shadow(0 0.0625rem 0.375rem color-mix(in srgb, var(--ink) 60%, transparent));
+    animation: su-shimmer 2.4s linear infinite;
+  }
+  .su-hero__cue { transition: opacity var(--dur-slow) var(--ease-out), visibility 0s linear 0s; }
+  .su-hero[data-moved] .su-hero__cue { opacity: 0; transition: opacity var(--dur-slow) var(--ease-out), visibility 0s linear var(--dur-slow); }
+}
+
+@keyframes su-wheel {
+  0% { transform: translateY(0); opacity: 1; }
+  70% { transform: translateY(0.5rem); opacity: 0.25; }
+  100% { transform: translateY(0); opacity: 1; }
+}
+@keyframes su-shimmer {
+  from { background-position: 100% 0; }
+  to { background-position: 0 0; }
+}
+
+/* ---------- stickers ----------
+   Each sticker bobs up and down a little and rocks a few degrees around its own tilt, slowly and on
+   its own clock (stickers.js gives each a different length and start), so they never move together. */
+@media (prefers-reduced-motion: no-preference) {
+  .su-sticker { animation: su-float var(--float, 6s) var(--ease-in-out) var(--delay, 0s) infinite; }
+}
+
+@keyframes su-float {
+  0%, 100% { transform: translateY(0) rotate(var(--tilt, 0deg)); }
+  50% { transform: translateY(-0.375rem) rotate(calc(var(--tilt, 0deg) + 4deg)); }
+}
+
+/* ---------- stickers roaming in the outro ----------
+   Over the turquoise painting the three stickers wander freely, each on its own long loop (22–30 s)
+   through the whole turquoise area, turning a little as they go, never in step. Transform only.
+   Way-points are the sticker's top-left corner, in cqi (the footer is 100cqi wide, 89.5cqi tall). */
+@media (prefers-reduced-motion: no-preference) {
+  .su-brand-footer__sticker--cupcake { animation: su-roam-cupcake 22s var(--ease-in-out) infinite; }
+  .su-brand-footer__sticker--brain { animation: su-roam-brain 27s var(--ease-in-out) -6s infinite; }
+  .su-brand-footer__sticker--car-guy { animation: su-roam-car 30s var(--ease-in-out) -11s infinite; }
+}
+
+@keyframes su-roam-cupcake {
+  0%, 100% { transform: translate(6cqi, 8cqi) rotate(-8deg); }
+  20% { transform: translate(38cqi, 3cqi) rotate(6deg); }
+  40% { transform: translate(72cqi, 18cqi) rotate(-4deg); }
+  60% { transform: translate(56cqi, 50cqi) rotate(10deg); }
+  80% { transform: translate(14cqi, 40cqi) rotate(-12deg); }
+}
+@keyframes su-roam-brain {
+  0%, 100% { transform: translate(74cqi, 46cqi) rotate(7deg); }
+  25% { transform: translate(40cqi, 56cqi) rotate(-6deg); }
+  50% { transform: translate(6cqi, 26cqi) rotate(9deg); }
+  75% { transform: translate(34cqi, 6cqi) rotate(-5deg); }
+}
+@keyframes su-roam-car {
+  0%, 100% { transform: translate(8cqi, 52cqi) rotate(-4deg); }
+  30% { transform: translate(66cqi, 56cqi) rotate(3deg); }
+  55% { transform: translate(70cqi, 12cqi) rotate(-6deg); }
+  80% { transform: translate(28cqi, 22cqi) rotate(5deg); }
+}

@@ -1,0 +1,94 @@
+/* 00-tokens.css — THE one home for colours, fonts, sizes, spacing, radii and timings.
+   Components use var(--…) only. To change a colour or size, change it here.
+   Source: docs/spec/01-brand-tokens.md and 02-typography.md. */
+:root {
+  color-scheme: light;   /* phones in dark mode must not repaint the page: #FBF8F3 is locked */
+
+  /* ---------- colours ---------- */
+  --bg: #FBF8F3;             /* page background — LOCKED */
+  --card: #FFFFFF;           /* cards, sheets */
+  --ink: #2E1D14;            /* primary text */
+  --ink-2: #7A6A5E;          /* secondary text on cream */
+  --ink-2-tint: #5C4A3E;     /* secondary text on tinted bands */
+  --pink: #E06A73;           /* shakes accent, clock second hand — not for text under 18px */
+  --pink-text: #B8424D;      /* pink text; the deep-pink brand footer (the only dark surface) */
+  --teal: #50B1AF;           /* drinks accent */
+  --orange: #E98650;         /* desserts accent */
+  --choc-1: #8B5E40;         /* chocolate light, drip, «قهوة» */
+  --choc-2: #6F3A1E;         /* chocolate deep */
+  --blob-pink: #E97D8E;      /* the blob ONLY — never a UI fill */
+  --blob-orange: #E98650;    /* the blob orange (same as desserts orange) */
+  --clock-ink: #2E1D14;      /* clock outline */
+  --clock-ink-2: #54371F;    /* clock hands */
+  --matcha: #849C54;         /* «وماتشا» + matcha/smoothie imagery only; sampled from the matcha pour's last frame */
+
+  /* world accents: shakes = pink · drinks = teal · desserts = orange */
+  --accent-shakes: var(--pink);
+  --accent-drinks: var(--teal);
+  --accent-desserts: var(--orange);
+  --accent: var(--accent-shakes);   /* default tint before any script runs */
+
+  /* ---------- fonts ---------- */
+  /* Display = Baloo Bhaijaan 2 (700–800). Functional Arabic = Tajawal (400/500/700 only).
+     English = Baloo 2 (600–800), listed first so Latin uses it and Arabic falls through to Tajawal. */
+  --font-display: 'Baloo Bhaijaan 2', 'Tajawal', system-ui, sans-serif;
+  --font-ar: 'Tajawal', system-ui, sans-serif;
+  --font-latin: 'Baloo 2', 'Tajawal', system-ui, sans-serif;
+  --font-price: 'Tajawal', system-ui, sans-serif;   /* Tajawal alone so digits line up */
+  --font-hero: 'Almarai', 'Tajawal', system-ui, sans-serif;   /* the hero line only (Almarai Bold) */
+
+  --fw-regular: 400;   /* Tajawal body, descriptions, footer info */
+  --fw-medium: 500;    /* Tajawal item names */
+  --fw-bold: 700;      /* Tajawal prices; display headlines */
+  --fw-black: 800;     /* display at its heaviest */
+  --fw-latin: 600;     /* Baloo 2 English labels (600–800 allowed) */
+
+  /* type scale (phone-first; the two largest grow with the screen) */
+  --fs-xs: 0.8125rem;                      /* 13px */
+  --fs-sm: 0.875rem;                       /* 14px */
+  --fs-base: 1rem;                         /* 16px */
+  --fs-md: 1.125rem;                       /* 18px — smallest size for display font / pink text */
+  --fs-lg: 1.375rem;                       /* 22px */
+  --fs-xl: 1.75rem;                        /* 28px */
+  --fs-2xl: clamp(2rem, 8vw, 2.75rem);     /* 32–44px */
+  --fs-display: clamp(2.5rem, 11vw, 4rem); /* 40–64px */
+
+  --lh-body: 1.8;      /* Arabic body */
+  --lh-latin: 1.6;     /* English body */
+  --lh-item: 1.5;      /* item names (spec ≈ 1.45–1.6) */
+  --lh-display: 1.2;   /* headlines */
+  --ls-ar: 0;          /* Arabic letter-spacing is ALWAYS 0 (tracking breaks joining) */
+
+  /* ---------- spacing (4px steps) ---------- */
+  --space-1: 0.25rem;  /* 4 */
+  --space-2: 0.5rem;   /* 8 */
+  --space-3: 0.75rem;  /* 12 */
+  --space-4: 1rem;     /* 16 — phone side gutter */
+  --space-5: 1.5rem;   /* 24 */
+  --space-6: 2rem;     /* 32 */
+  --space-7: 3rem;     /* 48 */
+  --space-8: 4rem;     /* 64 */
+  --gutter: var(--space-4);
+  --content-max: 35rem; /* 560px reading width */
+
+  /* ---------- radii ---------- */
+  --r-sm: 0.5rem;      /* 8 — also the world card's starting radius */
+  --r-md: 1rem;        /* 16 */
+  --r-lg: 1.5rem;      /* 24 — large soft cards */
+  --r-world: 2.5rem;   /* 40 — world card radius at the end of its shrink */
+  --r-pill: 999px;     /* fully rounded pills */
+
+  /* ---------- sticky bars ---------- */
+  --header-h: 96px;    /* brand row + world tabs row; used by scroll margins (P02 replaces with --sticky-offset) */
+
+  /* ---------- timing & easing (used only by the motion layer, 90-motion.css) ---------- */
+  --dur-fast: 150ms;
+  --dur-base: 250ms;
+  --dur-slow: 450ms;
+  --dur-clock: 12s;    /* clock loop */
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+  --ease-smooth: cubic-bezier(0.45, 0, 0.55, 1);   /* smoothstep-like, for the world-card shrink */
+  --settle-from: 1.06;  /* world-card settle-in: the inner layer starts this zoomed in, settles to 1 */
+  --dur-settle: 1100ms;
+}

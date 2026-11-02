@@ -1,0 +1,116 @@
+/* flavor-stack — the stacked flavour card. A white front card with the first rows; when flavours are
+   hidden, two card edges peek out underneath (pure CSS layers, no images) — the "stacked up flavours"
+   look from the sketch. Opening the stack shows every remaining flavour in the same card and the
+   peeking edges go away (nothing is stacked behind any more). */
+
+/* .su-flavor-stack is a see-through wrapper: it draws the two cards behind (::after nearer,
+   ::before farther) under the white front card (.su-flavor-stack__card). */
+.su-flavor-stack { position: relative; isolation: isolate; }
+
+.su-flavor-stack__card {
+  border-radius: var(--r-lg);
+  background: var(--card);
+  box-shadow:
+    0 0.0625rem 0.125rem color-mix(in srgb, var(--ink) 8%, transparent),
+    0 0.75rem 1.5rem -1rem color-mix(in srgb, var(--ink) 30%, transparent);
+}
+
+.su-flavor-stack[data-stacked="true"]::before,
+.su-flavor-stack[data-stacked="true"]::after {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  inset-block: var(--space-6) -0.5rem;
+  inset-inline: var(--space-3);
+  border-radius: var(--r-lg);
+  background: color-mix(in srgb, var(--ink) 5%, var(--card));
+  box-shadow: 0 0.0625rem 0.1875rem color-mix(in srgb, var(--ink) 12%, transparent);
+}
+.su-flavor-stack[data-stacked="true"]::before {
+  inset-block: var(--space-7) -1rem;
+  inset-inline: var(--space-6);
+  background: color-mix(in srgb, var(--ink) 10%, var(--card));
+}
+/* opened: nothing is stacked behind any more */
+.su-flavor-stack:has(.su-flavor-stack__more[open])::before,
+.su-flavor-stack:has(.su-flavor-stack__more[open])::after { content: none; }
+
+.su-flavor-stack__rows { list-style: none; margin: 0; padding: 0 var(--space-4); }
+
+.su-flavor-stack__row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+  min-block-size: 3.25rem;
+  padding-block: var(--space-2);
+  border-block-start: 0.0625rem solid color-mix(in srgb, var(--ink) 8%, transparent);
+}
+.su-flavor-stack__card > .su-flavor-stack__rows > .su-flavor-stack__row:first-child { border-block-start: 0; }
+
+/* An invisible button covering the whole row: tapping anywhere on it opens the detail sheet. */
+.su-flavor-stack__row { position: relative; }
+.su-flavor-stack__tap {
+  position: absolute;
+  inset: 0;
+  inline-size: 100%;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+.su-flavor-stack__tap:active { background: color-mix(in srgb, var(--ink) 4%, transparent); }
+.su-flavor-stack__tap:focus-visible { outline: 0.125rem solid var(--ink); outline-offset: -0.125rem; border-radius: var(--r-sm); }
+
+.su-flavor-stack__text { display: grid; min-inline-size: 0; }
+/* board text keeps its own direction, but lines up with the page (no ragged right-aligned
+   Arabic under a left-aligned English name) */
+.su-flavor-stack__name,
+.su-flavor-stack__desc { justify-self: start; }
+/* Latin names (SUNRISE, WILD & FREE) use Baloo 2; Arabic letters fall through to Tajawal */
+.su-flavor-stack__name {
+  font-family: var(--font-latin);
+  font-weight: var(--fw-medium);
+  font-size: var(--fs-base);
+  line-height: var(--lh-item);
+}
+.su-flavor-stack__desc {
+  font-family: var(--font-ar);
+  font-size: var(--fs-xs);
+  line-height: var(--lh-item);
+  color: var(--ink-2);
+}
+.su-flavor-stack__price {
+  flex: none;
+  font-family: var(--font-price);
+  font-weight: var(--fw-bold);
+  font-size: var(--fs-base);
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+/* «+ N نكهة أخرى» / «عرض أقل». In browsers that can style <details> the control moves BELOW the
+   opened flavours (so they open in place); older browsers keep it above them — still works. */
+.su-flavor-stack__more { display: flex; flex-direction: column; }
+.su-flavor-stack__more::details-content { order: 1; }
+.su-flavor-stack__toggle {
+  order: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-block-size: 3rem;
+  border-block-start: 0.0625rem solid color-mix(in srgb, var(--ink) 8%, transparent);
+  list-style: none;
+  cursor: pointer;
+  color: var(--pink-text);
+  font-family: var(--font-ar);
+  font-weight: var(--fw-bold);
+  font-size: var(--fs-sm);
+}
+.su-flavor-stack__toggle:lang(en) { font-family: var(--font-latin); }
+.su-flavor-stack__toggle::-webkit-details-marker { display: none; }
+.su-flavor-stack__close,
+.su-flavor-stack__more[open] .su-flavor-stack__open { display: none; }
+.su-flavor-stack__more[open] .su-flavor-stack__close { display: inline; }
+.su-flavor-stack__toggle:focus-visible { outline: 0.125rem solid var(--ink); outline-offset: -0.125rem; border-radius: var(--r-lg); }

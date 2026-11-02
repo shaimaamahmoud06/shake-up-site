@@ -1,0 +1,93 @@
+/* finale-visit — «وين تلقانا؟»: branch cards (name, address «؟», hours «؟», Maps link), the way back to
+   the menu, the social links. Light surfaces only: the deep-pink
+   brand footer below is the page's only dark surface. */
+
+.su-visit { display: grid; gap: var(--space-3); }
+
+.su-visit__title {
+  margin: 0;
+  font-family: var(--font-display);
+  font-weight: var(--fw-black);
+  font-size: var(--fs-2xl);
+  line-height: var(--lh-display);
+  color: var(--pink-text);
+}
+.su-visit__title:lang(en) { font-family: var(--font-latin); }
+
+.su-visit__kicker {
+  margin: var(--space-3) 0 0;
+  font-family: var(--font-ar);
+  font-weight: var(--fw-bold);
+  font-size: var(--fs-sm);
+  color: var(--ink-2);
+}
+.su-visit__kicker:lang(en) { font-family: var(--font-latin); }
+
+.su-visit__branches,
+.su-visit__socials { display: grid; gap: var(--space-3); margin: 0; padding: 0; list-style: none; }
+
+.su-visit__branch {
+  display: grid;
+  gap: var(--space-2);
+  padding: var(--space-4);
+  border-radius: var(--r-lg);
+  background: var(--card);
+  box-shadow: 0 0.0625rem 0.125rem color-mix(in srgb, var(--ink) 8%, transparent);
+}
+.su-visit__branch-name {
+  margin: 0;
+  font-family: var(--font-display);
+  font-weight: var(--fw-bold);
+  font-size: var(--fs-lg);
+  line-height: var(--lh-display);
+}
+.su-visit__branch-name:lang(en) { font-family: var(--font-latin); }
+
+.su-visit__facts { display: grid; gap: var(--space-1); margin: 0; }
+.su-visit__fact { display: flex; gap: var(--space-2); font-family: var(--font-ar); font-size: var(--fs-sm); line-height: var(--lh-item); }
+.su-visit__fact:lang(en) { font-family: var(--font-latin); }
+.su-visit__fact dt { color: var(--ink-2); }
+.su-visit__fact dd { margin: 0; font-weight: var(--fw-bold); }
+
+.su-visit__map,
+.su-visit__menu {
+  display: inline-flex;
+  align-items: center;
+  justify-self: start;
+  gap: var(--space-2);
+  min-block-size: 2.75rem;
+  padding-inline: var(--space-4);
+  border-radius: var(--r-pill);
+  font-family: var(--font-ar);
+  font-weight: var(--fw-bold);
+  font-size: var(--fs-sm);
+  text-decoration: none;
+}
+.su-visit__map:lang(en), .su-visit__menu:lang(en) { font-family: var(--font-latin); }
+.su-visit__map { background: color-mix(in srgb, var(--pink) 14%, var(--card)); color: var(--pink-text); }
+/* «تصفح المنيو» — a light pill (the brand footer is the only dark surface) */
+.su-visit__menu {
+  background: var(--card);
+  box-shadow: 0 0 0 0.0625rem color-mix(in srgb, var(--ink) 18%, transparent);
+  color: var(--ink);
+}
+.su-visit__map:focus-visible, .su-visit__menu:focus-visible, .su-visit__social:focus-visible {
+  outline: 0.125rem solid var(--ink);
+  outline-offset: 0.1875rem;
+}
+
+.su-visit__social {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--space-3);
+  min-block-size: 2.75rem;
+  padding: var(--space-2) var(--space-4);
+  border-radius: var(--r-md);
+  background: var(--card);
+  color: var(--ink);
+  font-family: var(--font-latin);
+  text-decoration: none;
+}
+.su-visit__social-label { font-weight: var(--fw-bold); }
+.su-visit__social-handle { color: var(--pink-text); font-weight: var(--fw-latin); }

@@ -1,0 +1,94 @@
+/* category-header — one image card per category. Until its photo is delivered the card is a soft
+   wash of the world's colour with a small «صورة قريبًا» label; the frame keeps the photo's final
+   shape (5:2), so nothing jumps when the photo arrives. */
+
+.su-category-header {
+  --_accent: var(--accent-shakes);
+  position: relative;
+  container-type: inline-size;
+  overflow: hidden;
+  display: grid;
+  aspect-ratio: 5 / 2;
+  border-radius: var(--r-lg);
+  background:
+    radial-gradient(120% 140% at 100% 0%, color-mix(in srgb, var(--_accent) 18%, var(--bg)), transparent 60%),
+    linear-gradient(160deg, color-mix(in srgb, var(--_accent) 16%, var(--bg)), color-mix(in srgb, var(--_accent) 42%, var(--bg)));
+  color: var(--ink);
+}
+/* the inner layer fills the still frame and holds everything; its own stacking layer always, so it
+   paints the same whether or not the settle-in is moving it */
+.su-category-header__inner {
+  position: relative;
+  isolation: isolate;
+  display: grid;
+  align-content: end;
+}
+.su-category-header[data-world="drinks"] { --_accent: var(--accent-drinks); }
+.su-category-header[data-world="desserts"] { --_accent: var(--accent-desserts); }
+
+.su-category-header__photo {
+  position: absolute;
+  inset-block-start: var(--space-3);
+  inset-inline-start: var(--space-3);
+  padding: 0.125rem var(--space-2);
+  border: 0.0625rem dashed color-mix(in srgb, var(--ink) 25%, transparent);
+  border-radius: var(--r-pill);
+  font-size: var(--fs-xs);
+  line-height: var(--lh-item);
+  color: var(--ink-2-tint);
+}
+
+/* a delivered photo: fills the card behind the words, with a soft dark fade so white words read */
+.su-category-header__img {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  inline-size: 100%;
+  block-size: 100%;
+  object-fit: cover;
+}
+.su-category-header[data-photo="true"] { color: var(--card); }
+.su-category-header[data-photo="true"] .su-category-header__inner::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: linear-gradient(to top, color-mix(in srgb, var(--ink) 65%, transparent), transparent 60%);
+}
+.su-category-header[data-photo="true"] .su-category-header__count { color: var(--card); }
+.su-category-header[data-photo="true"] .su-category-header__chip { color: var(--ink); }
+
+.su-category-header__chip {
+  position: absolute;
+  inset-block-start: var(--space-3);
+  inset-inline-end: var(--space-3);
+  padding: 0.125rem var(--space-3);
+  border-radius: var(--r-pill);
+  background: var(--card);
+  box-shadow: 0 0 0 0.0625rem color-mix(in srgb, var(--ink) 8%, transparent);
+  font-family: var(--font-price);
+  font-weight: var(--fw-bold);
+  font-size: var(--fs-sm);
+  line-height: var(--lh-item);
+  white-space: nowrap;
+}
+
+.su-category-header__foot {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--space-3);
+  padding: var(--space-3) var(--space-4);
+}
+.su-category-header__name {
+  margin: 0;
+  font-weight: var(--fw-black);
+  font-size: max(var(--fs-lg), 8cqi);
+  line-height: 1.1;
+}
+.su-category-header__count {
+  flex: none;
+  font-weight: var(--fw-medium);
+  font-size: var(--fs-sm);
+  color: var(--ink-2-tint);
+}

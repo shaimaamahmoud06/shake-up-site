@@ -1,0 +1,55 @@
+/* 02-layout.css — where blocks sit on the page: widths, gutters, the sticky-bar offset and the
+   space between blocks. Components never set their own outer margin; moving a block never means
+   editing the block. */
+
+/* The two sticky bars (top bar + utility bar). --sticky-offset is the one number every
+   scroll-margin uses, so a jump never hides a heading under the bars. */
+:root {
+  --topbar-h: 3rem;        /* 48 */
+  --utilitybar-h: 3.5rem;  /* 56 */
+  --sticky-offset: calc(var(--topbar-h) + var(--utilitybar-h) + var(--space-2));
+}
+
+main, .su-visit { max-width: var(--content-max); margin-inline: auto; padding-inline: var(--gutter); }
+
+/* Jumping to any section lands below both sticky bars. */
+.world, .category, .su-fresh, .su-visit { scroll-margin-top: var(--sticky-offset); }
+
+/* The pour scene tucks up under the painted blob so the cup sits beneath its left drip. The numbers
+   are the old stream drawing's (the cup was lined up under it, see pour-scene.css): the scene starts
+   where it did when that drawing was shown, 421/1527 of the page width up from the painting's bottom,
+   plus 140/646 of it back down. */
+.su-pour { margin-block-start: calc(-100% * 421 / 1527 + 100% * 140 / 646); }
+/* The blob paints in front of the pour scene: the painting covers the top of the video. */
+.su-blob { position: relative; z-index: 1; }
+
+.world { margin-block-start: var(--space-6); }
+
+/* Fresh & Light: its scene runs edge to edge after Smoothies (the last Drinks category), a little apart. */
+.su-fresh { margin-inline: calc(-1 * var(--gutter)); margin-block-start: var(--space-7); }
+
+/* Finale: the visit block after the menu; its wide band runs edge to edge and meets the brand footer. */
+.su-visit { margin-block-start: var(--space-8); }
+.su-visit__band { margin-inline: calc(-1 * var(--gutter)); margin-block-start: var(--space-6); }
+
+/* World cards run to the screen edges on a phone (past main's side gutter) and sit apart from the
+   categories around them. */
+.su-world-card { margin-inline: calc(-1 * var(--gutter)); }
+.su-world-card--exit { margin-block-start: var(--space-7); }
+/* A category = header card + flavour stack. The extra space below leaves room for the peeking card edges. */
+.category { display: grid; gap: var(--space-3); margin-block-start: var(--space-7); }
+
+/* Shakes: the world ends on the chocolate drip, edge to edge, a little apart from the exit card. Drinks opens with the matcha scene,
+   edge to edge (its sizes follow the page width). */
+.su-drip, .su-matcha { margin-inline: calc(-1 * var(--gutter)); }
+.su-drip { margin-block-start: var(--space-7); }
+.su-matcha { margin-block-end: var(--space-6); }
+/* No cream between the chocolate melt line and the matcha bowl (owner edit): the Drinks world opens
+   without its usual top space, and the scene tucks up under the drip window. The chocolate's flat
+   edge ends 74 units (of the window's 287) down; the scene starts there, then 4% of the width higher
+   still so the video's feathered top edge hides under the chocolate. Both are measured on the full
+   edge-to-edge width (main's width + its two gutters). The drip paints in front; the cream gaps
+   between its drips let the video (same cream) show through. Tied to choc-drip.png's numbers. */
+.world:has(> .su-matcha) { margin-block-start: 0; }
+.su-drip { position: relative; z-index: 1; }
+.su-matcha { margin-block-start: calc(-1 * (100% + 2 * var(--gutter)) * ((287 - 74) / 1529 + 0.04)); }

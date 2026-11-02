@@ -1,0 +1,37 @@
+/* stickers — the owner's three stickers, each twice (stickers.js). Small, tilted, in empty space.
+   Phones: centred on the gap above their section (--_gap), at one side, poking a little into the
+   gutter; they overlap the cards around them only at a corner. Wide screens: out in the empty margin
+   beside the 35rem menu column, a bit bigger. Never take a tap (pointer-events: none). */
+
+.su-sticker-host { position: relative; }
+
+.su-sticker {
+  --_gap: var(--space-7);
+  --_size: 4.5rem;
+  position: absolute;
+  z-index: 3;
+  inset-block-start: calc(var(--_gap) / -2 - var(--_size) / 2);
+  inline-size: var(--_size);
+  block-size: auto;
+  transform: rotate(var(--tilt, 0deg));
+  filter: drop-shadow(0 0.25rem 0.5rem color-mix(in srgb, var(--ink) 18%, transparent));
+  pointer-events: none;
+  user-select: none;
+}
+#visit > .su-sticker { --_gap: var(--space-8); }
+/* the car is a wide sticker: the same height reads as the same size */
+.su-sticker--car { --_size: 6rem; inset-block-start: calc(var(--_gap) / -2 - var(--_size) * 0.71 / 2); }
+
+.su-sticker[data-side="start"] { inset-inline-start: -0.5rem; }
+.su-sticker[data-side="end"] { inset-inline-end: -0.5rem; }
+/* the visit block is full width on phones (its own gutter inside): stay on screen, tilt included */
+#visit > .su-sticker[data-side="start"] { inset-inline-start: var(--space-2); }
+#visit > .su-sticker[data-side="end"] { inset-inline-end: var(--space-2); }
+
+/* wide screens: the empty margins beside the menu column hold them, clear of the content */
+@media (min-width: 64rem) {   /* margins of 14.5rem+ each side: room for the 9rem car + 2rem */
+  .su-sticker { --_size: 7rem; inset-block-start: calc(var(--_gap) / -2); }
+  .su-sticker--car { --_size: 9rem; }
+  .su-sticker[data-side="start"] { inset-inline-start: calc(-1 * var(--_size) - var(--space-6)); }
+  .su-sticker[data-side="end"] { inset-inline-end: calc(-1 * var(--_size) - var(--space-6)); }
+}

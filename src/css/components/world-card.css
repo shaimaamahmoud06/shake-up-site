@@ -1,0 +1,141 @@
+/* world-card — sketch Pages 3–4 + footer reference: the full-height card that opens a world, and the
+   shorter exit card that ends it. The card itself is a still frame (size, colour, corners) that never
+   moves or changes; everything in it sits on one inner layer, the only thing the settle-in
+   (90-motion.css + motion/settle.js) ever scales. The frame clips it at its fixed corners.
+   Tones: 'dark'  = deep world-colour wash (or a dark photo) with white text;
+          'light' = a cream photo shown at its natural shape at the top, ink text below it. */
+
+.su-world-card {
+  --_accent: var(--accent-shakes);
+  position: relative;
+  isolation: isolate;
+  container-type: inline-size;
+  overflow: hidden;
+  display: grid;
+  block-size: calc(100svh - var(--sticky-offset));
+  min-block-size: 30rem;
+  max-block-size: 52rem;
+  border-radius: var(--r-sm);
+  background: color-mix(in srgb, var(--_accent) 55%, var(--ink));
+  color: var(--card);
+}
+/* fills the frame; its own stacking layer always, so it paints the same whether or not it is moving */
+.su-world-card__inner {
+  position: relative;
+  isolation: isolate;
+  display: grid;
+  align-content: end;
+}
+.su-world-card[data-world="drinks"] { --_accent: var(--accent-drinks); }
+.su-world-card[data-world="desserts"] { --_accent: var(--accent-desserts); }
+
+/* soft dark fade behind the words (dark tone only) */
+.su-world-card__inner::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: linear-gradient(to top, color-mix(in srgb, var(--ink) 55%, transparent), transparent 55%);
+}
+
+.su-world-card__media {
+  position: absolute;
+  inset: 0;
+  z-index: -2;
+  inline-size: 100%;
+  block-size: 100%;
+  object-fit: cover;
+}
+
+/* light tone: cream photo at its own 4:5 shape on cream, words in the cream below it */
+.su-world-card[data-tone="light"] { background: var(--bg); color: var(--ink); }
+.su-world-card[data-tone="light"] .su-world-card__inner::before { content: none; }
+.su-world-card[data-tone="light"] .su-world-card__media {
+  inset-block-end: auto;
+  block-size: auto;
+  max-block-size: calc(100% - 12rem);
+  aspect-ratio: 1080 / 1350;
+  object-fit: contain;
+  object-position: 50% 0;
+}
+.su-world-card[data-tone="light"] .su-world-card__name { color: var(--pink-text); }
+
+.su-world-card__chip {
+  position: absolute;
+  inset-block-start: var(--space-4);
+  inset-inline-end: var(--space-4);
+  padding: var(--space-1) var(--space-3);
+  border-radius: var(--r-pill);
+  background: var(--card);
+  box-shadow: 0 0 0 0.0625rem color-mix(in srgb, var(--ink) 10%, transparent);
+  color: var(--ink);
+  font-family: var(--font-price);
+  font-weight: var(--fw-bold);
+  font-size: var(--fs-sm);
+  line-height: var(--lh-item);
+}
+
+/* labelled placeholder while the photo is not delivered */
+.su-world-card__pending {
+  position: absolute;
+  inset-block-start: 40%;
+  inset-inline: 0;
+  justify-self: center;
+  inline-size: max-content;
+  margin-inline: auto;
+  padding: var(--space-1) var(--space-3);
+  border: 0.0625rem dashed color-mix(in srgb, var(--card) 60%, transparent);
+  border-radius: var(--r-pill);
+  font-family: var(--font-latin);
+  font-size: var(--fs-xs);
+  unicode-bidi: isolate;
+}
+
+.su-world-card__foot {
+  display: grid;
+  gap: var(--space-1);
+  padding: var(--space-5) var(--space-4);
+}
+.su-world-card__kicker {
+  justify-self: end;
+  margin: 0;
+  font-family: var(--font-latin);
+  font-weight: var(--fw-bold);
+  font-size: var(--fs-xs);
+  letter-spacing: 0.22em;   /* Latin only — never on Arabic */
+}
+.su-world-card__name {
+  justify-self: start;   /* the page's start corner; the kicker takes the opposite one */
+  margin: 0;
+  font-family: var(--font-display);
+  font-weight: var(--fw-black);
+  font-size: 24cqi;
+  line-height: 1;
+  letter-spacing: var(--ls-ar);
+}
+.su-world-card__cats {
+  margin: 0;
+  font-family: var(--font-ar);
+  font-weight: var(--fw-medium);
+  font-size: var(--fs-sm);
+  line-height: var(--lh-item);
+}
+.su-world-card__cats:lang(en) { font-family: var(--font-latin); }
+
+/* exit card: a solid wash of the world's colour, the next world's name and count in white (no «التالي:») */
+.su-world-card--exit {
+  block-size: auto;
+  min-block-size: 15rem;
+  max-block-size: none;
+  background: var(--_accent);
+  color: var(--card);   /* white on the world colour (owner, 2 Nov 2026: ink was too dark) */
+  text-decoration: none;
+}
+.su-world-card--exit .su-world-card__inner {
+  align-content: center;
+  gap: var(--space-1);
+  padding: var(--space-6) var(--space-4);
+}
+.su-world-card--exit .su-world-card__inner::before { content: none; }
+.su-world-card--exit .su-world-card__name { font-size: 18cqi; }
+.su-world-card--exit:focus-visible { outline: 0.125rem solid var(--ink); outline-offset: 0.125rem; }

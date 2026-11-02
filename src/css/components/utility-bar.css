@@ -1,0 +1,174 @@
+/* utility-bar — sticky under the top bar: size toggle · search · language.
+   Search is the field only (behaviour arrives in P09). Controls are 36–42px tall, 16px input text
+   (smaller makes iPhones zoom the page when the field is tapped). */
+
+.su-utility-bar {
+  position: sticky;
+  inset-block-start: var(--topbar-h);
+  z-index: 19;
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  block-size: var(--utilitybar-h);
+  padding-inline: var(--gutter);
+  background: var(--bg);
+  box-shadow: 0 0.0625rem 0 color-mix(in srgb, var(--ink) 10%, transparent);
+}
+
+/* size toggle: one pill, two segments; the pressed one is solid ink */
+.su-utility-bar__size {
+  display: flex;
+  flex: none;
+  align-items: center;
+  gap: 0.125rem;
+  padding: 0.1875rem;
+  border-radius: var(--r-pill);
+  background: var(--card);
+  box-shadow: inset 0 0 0 0.0625rem color-mix(in srgb, var(--ink) 12%, transparent);
+}
+.su-utility-bar__size-label {
+  padding-inline: var(--space-2) var(--space-1);
+  font-size: var(--fs-xs);
+  font-weight: var(--fw-medium);
+  color: var(--ink-2);
+}
+.su-utility-bar__size-btn {
+  min-inline-size: 2.25rem;
+  block-size: 2.25rem;
+  padding: 0;
+  border: 0;
+  border-radius: var(--r-pill);
+  background: transparent;
+  color: var(--ink);
+  font-family: var(--font-price);
+  font-weight: var(--fw-bold);
+  font-size: var(--fs-base);
+  cursor: pointer;
+}
+.su-utility-bar__size-btn[aria-pressed="true"] { background: var(--ink); color: var(--card); }
+
+/* search field */
+.su-utility-bar__search {
+  display: flex;
+  flex: 1;
+  align-items: center;
+  gap: var(--space-2);
+  min-inline-size: 0;
+  block-size: 2.625rem;
+  padding-inline: var(--space-3);
+  border-radius: var(--r-pill);
+  background: var(--card);
+  box-shadow: inset 0 0 0 0.0625rem color-mix(in srgb, var(--ink) 12%, transparent);
+  color: var(--ink-2);
+}
+.su-utility-bar__search:focus-within { box-shadow: inset 0 0 0 0.125rem var(--ink); }
+.su-utility-bar__icon { flex: none; inline-size: 1.125rem; block-size: 1.125rem; }
+.su-utility-bar__input {
+  flex: 1;
+  min-inline-size: 0;
+  padding: 0;
+  border: 0;
+  outline: none;
+  background: transparent;
+  color: var(--ink);
+  font-size: var(--fs-base);
+  line-height: var(--lh-item);
+}
+.su-utility-bar__input::placeholder { color: var(--ink-2); opacity: 1; }
+
+/* language toggle: shows the OTHER language (EN on the Arabic page, ع on the English page) */
+.su-utility-bar__lang {
+  flex: none;
+  inline-size: 2.625rem;
+  block-size: 2.625rem;
+  padding: 0;
+  border: 0;
+  border-radius: var(--r-pill);
+  background: var(--card);
+  box-shadow: inset 0 0 0 0.0625rem color-mix(in srgb, var(--ink) 12%, transparent);
+  color: var(--ink);
+  font-family: var(--font-latin);
+  font-weight: var(--fw-bold);
+  font-size: var(--fs-sm);
+  cursor: pointer;
+}
+:root:lang(en) .su-utility-bar__lang { font-family: var(--font-ar); font-size: var(--fs-md); }
+
+.su-utility-bar__size-btn:focus-visible, .su-utility-bar__lang:focus-visible {
+  outline: 0.125rem solid var(--ink);
+  outline-offset: 0.125rem;
+}
+
+/* label read by screen readers only */
+.su-utility-bar__sr {
+  position: absolute;
+  inline-size: 0.0625rem;
+  block-size: 0.0625rem;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+/* search results: a panel hanging under the bar while something is typed (hidden otherwise).
+   It scrolls by itself; the page behind keeps its place. */
+.su-utility-bar__results {
+  position: absolute;
+  inset-block-start: 100%;
+  inset-inline: 0;
+  max-block-size: 60svh;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  padding-block: var(--space-2);
+  padding-inline: var(--gutter);
+  background: var(--card);
+  border-end-start-radius: var(--r-lg);
+  border-end-end-radius: var(--r-lg);
+  box-shadow: 0 0.75rem 1.5rem -0.75rem color-mix(in srgb, var(--ink) 35%, transparent);
+}
+.su-utility-bar__results[hidden] { display: none; }
+.su-utility-bar__results-count {
+  margin: 0;
+  padding-block: var(--space-1);
+  font-size: var(--fs-xs);
+  color: var(--ink-2);
+}
+.su-utility-bar__results-list { margin: 0; padding: 0; list-style: none; }
+.su-utility-bar__results-list > li + li { border-block-start: 0.0625rem solid color-mix(in srgb, var(--ink) 8%, transparent); }
+.su-utility-bar__result {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+  inline-size: 100%;
+  min-block-size: 3.25rem;
+  padding: var(--space-2) 0;
+  border: 0;
+  background: transparent;
+  color: var(--ink);
+  text-align: start;
+  cursor: pointer;
+}
+.su-utility-bar__result:focus-visible { outline: 0.125rem solid var(--ink); outline-offset: -0.125rem; border-radius: var(--r-sm); }
+.su-utility-bar__result-text { display: grid; min-inline-size: 0; }
+.su-utility-bar__result-name {
+  justify-self: start;
+  font-family: var(--font-latin);
+  font-weight: var(--fw-medium);
+  font-size: var(--fs-base);
+  line-height: var(--lh-item);
+}
+.su-utility-bar__result-cat {
+  justify-self: start;
+  font-size: var(--fs-xs);
+  line-height: var(--lh-item);
+  color: var(--ink-2);
+}
+.su-utility-bar__result-cat:lang(en) { font-family: var(--font-latin); }
+.su-utility-bar__result-price {
+  flex: none;
+  font-family: var(--font-price);
+  font-weight: var(--fw-bold);
+  font-size: var(--fs-base);
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}

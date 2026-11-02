@@ -1,0 +1,24 @@
+/* drip — sketch Page 6: the owner's melted-chocolate layer, full width, natural shape, never stretched.
+   choc-drip.png is a 3240×4050 canvas; the painting fills x 540–2068, y 3028–3314 of it (1529×287, a
+   phone-width frame, flush left and right). .su-drip is a window of exactly that box and the image sits
+   inside it, scaled so the painting's width = the page width. Below it the page cream shows through
+   the gaps between the drips (the image is transparent there). A few near-invisible specks lower on
+   the canvas fall outside the window. */
+
+.su-drip {
+  position: relative;
+  overflow: hidden;
+  aspect-ratio: 1529 / 287;
+}
+.su-drip__art {
+  position: absolute;
+  inset-block-start: calc(-100% * 3028 / 287);
+  inset-inline-start: calc(-100% * 540 / 1529);
+  display: block;
+  inline-size: calc(100% * 3240 / 1529);
+  max-inline-size: none;
+  block-size: auto;
+  aspect-ratio: 3240 / 4050;
+}
+/* the painting runs left-to-right in both languages (the drips stay at the right-hand end) */
+.su-drip { direction: ltr; }

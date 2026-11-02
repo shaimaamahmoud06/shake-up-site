@@ -1,0 +1,47 @@
+/* matcha-scene — sketch Page 6: the matcha pour on the left, «قهوة / وماتشا» on the right, on the cream
+   page (the video has #FBF8F3 baked in). Its top edge is feathered (≈4%: the pour comes in from above
+   and the frame cuts it off), and its right edge too, so no video edge ever shows.
+   «وماتشا» is the ONLY place green (--matcha) is used as a word colour. */
+
+.su-matcha {
+  container-type: inline-size;
+  display: grid;
+  grid-template-columns: 57cqi 1fr;   /* the video is 69cqi wide (owner edit: ~15% bigger than 60cqi): it
+                                        runs 12cqi into the heading column, over the empty cream right
+                                        side of its frame (the cup and bowl stay in its left 56%) */
+  align-items: end;
+  overflow-x: clip;
+}
+
+.su-matcha__media { position: relative; margin-inline-end: -12cqi; }
+.su-matcha__video {
+  display: block;
+  inline-size: 100%;
+  block-size: auto;
+  aspect-ratio: 1080 / 1350;
+  object-fit: contain;
+  background: var(--bg);
+  -webkit-mask-image: linear-gradient(to bottom, transparent, var(--ink) 4%), linear-gradient(to left, transparent, var(--ink) 10%);
+  -webkit-mask-composite: source-in;
+  mask-image: linear-gradient(to bottom, transparent, var(--ink) 4%), linear-gradient(to left, transparent, var(--ink) 10%);
+  mask-composite: intersect;
+}
+
+.su-matcha__heading {
+  position: relative;      /* in front of the video's cream right-hand side */
+  display: grid;
+  justify-items: start;
+  margin: 0;
+  padding-block-end: 22cqi;
+  padding-inline: var(--space-2) var(--gutter);
+  font-family: var(--font-display);
+  font-weight: var(--fw-black);
+  line-height: 1;
+}
+.su-matcha__heading[dir="rtl"] { padding-inline: var(--gutter) var(--space-2); }
+.su-matcha__coffee { font-size: 15cqi; color: var(--choc-1); }
+.su-matcha__matcha { font-size: 12cqi; color: var(--matcha); }
+/* English words run longer: Baloo 2, one step smaller */
+.su-matcha__heading[lang="en"] { font-family: var(--font-latin); }
+.su-matcha__heading[lang="en"] .su-matcha__coffee { font-size: 11cqi; }
+.su-matcha__heading[lang="en"] .su-matcha__matcha { font-size: 8.5cqi; white-space: nowrap; }

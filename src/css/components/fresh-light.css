@@ -1,0 +1,50 @@
+/* fresh-light — «أخفّ وفريش» / Fresh & Light: the calm scene after Smoothies, the last Drinks category. Teal family (the drinks colour, softened) — never the matcha green,
+   which belongs to «وماتشا» only. The scene reuses the staple's header + stacked card styles. */
+
+/* the scene: a soft teal wash, edge to edge, holding the staple */
+.su-fresh {
+  display: grid;
+  gap: var(--space-3);
+  padding: var(--space-6) var(--gutter) var(--space-7);
+  background: color-mix(in srgb, var(--teal) 14%, var(--bg));
+}
+.su-fresh .su-fresh__header { --_accent: var(--accent-drinks); aspect-ratio: auto; min-block-size: 9rem; }
+
+/* add-ons strip: names from the data, no prices («السعر عند الطلب») */
+.su-fresh__addons {
+  display: grid;
+  gap: var(--space-2);
+  margin-block-start: var(--space-4);
+}
+.su-fresh__addons-title {
+  margin: 0;
+  font-family: var(--font-display);
+  font-weight: var(--fw-bold);
+  font-size: var(--fs-md);
+  line-height: var(--lh-display);
+}
+.su-fresh__addons-title:lang(en) { font-family: var(--font-latin); }
+.su-fresh__addon-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.su-fresh__addon {
+  padding: var(--space-1) var(--space-3);
+  border-radius: var(--r-pill);
+  background: var(--card);
+  font-family: var(--font-ar);
+  font-weight: var(--fw-medium);
+  font-size: var(--fs-sm);
+  line-height: var(--lh-item);
+}
+.su-fresh__addons-ask {
+  margin: 0;
+  font-family: var(--font-ar);
+  font-size: var(--fs-xs);
+  color: var(--ink-2-tint);
+}
+.su-fresh__addons-ask:lang(en) { font-family: var(--font-latin); }

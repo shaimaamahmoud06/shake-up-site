@@ -1,0 +1,33 @@
+/* brand-footer — the outro: the page-2 blob's shape again, in turquoise with orange splashes (the
+   owner's painting, recoloured: assets/img/outro-blob.webp), edge to edge at its natural ratio
+   (1527×1366), never stretched. Its drips hang into the cream page at the very bottom. Nothing is
+   written over it. The three stickers wander over it (their paths are in 90-motion.css); still, each
+   rests in its own corner of the turquoise. Laid out the same in both languages: the painting does
+   not mirror. Positions are in cqi (1cqi = 1% of the footer's width; the painting is 89.5cqi tall). */
+
+.su-brand-footer {
+  container-type: inline-size;
+  margin-block-start: var(--space-7);
+  overflow-x: clip;
+}
+.su-brand-footer__img {
+  display: block;
+  inline-size: 100%;
+  block-size: auto;
+}
+
+.su-brand-footer__art { position: relative; overflow: hidden; }
+.su-brand-footer__sticker {
+  position: absolute;
+  inset-block-start: 0;
+  inset-inline-start: 0;
+  block-size: auto;
+  pointer-events: none;
+  user-select: none;
+  filter: drop-shadow(0 0.25rem 0.5rem color-mix(in srgb, var(--ink) 25%, transparent));
+}
+/* the art box is laid out left-to-right in both languages, like the painting */
+.su-brand-footer__art { direction: ltr; }
+.su-brand-footer__sticker--cupcake { inline-size: 17cqi; transform: translate(6cqi, 8cqi) rotate(-8deg); }
+.su-brand-footer__sticker--brain { inline-size: 18cqi; transform: translate(74cqi, 46cqi) rotate(7deg); }
+.su-brand-footer__sticker--car-guy { inline-size: 24cqi; transform: translate(8cqi, 52cqi) rotate(-4deg); }

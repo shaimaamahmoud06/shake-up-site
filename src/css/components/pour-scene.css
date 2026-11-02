@@ -1,0 +1,79 @@
+/* pour-scene — sketch Page 3: the 2D blob stream pours into the 3D milkshake cup.
+   The VIDEO is moved and scaled so the blob stream's tip lands in the cup mouth; the SVG never moves.
+   Geometry (all in blob-stream units, see blob.css): this section starts 140 units into the stream
+   drawing (just under its pink band); the stream tip is at x 120, y 389; the stream drawing's visible
+   part starts at x 6 and is 646 units wide = the page width. In the video, the cup mouth's centre is
+   58.7% across. The video background is #FBF8F3, the same as the page, so its edges never show.
+   Laid out left-to-right in both languages (the drawing does not mirror); the copy column carries
+   its own language and direction. */
+
+.su-pour {
+  --_vw: 85cqi;                                                /* video width (cup ≈ 34% of the page) */
+  --_vh: calc(var(--_vw) * 1350 / 1080);                       /* video keeps its 4:5 shape */
+  --_rim: 0.47;                                                /* cup mouth sits 47% down the video frame */
+  --_top: calc(var(--_tip-y) - var(--_vh) * var(--_rim));      /* video top: puts the cup mouth at the tip */
+  --_tip-x: calc(100cqi * (120 - 6) / 646);
+  --_tip-y: calc(100cqi * (389 - 140) / 646);
+  container-type: inline-size;
+  overflow-x: clip;
+}
+
+.su-pour__stage {
+  display: grid;
+  grid-template-columns: 46cqi 1fr;
+}
+
+/* The video's upper part (its own falling stream) sits BEHIND the blob (02-layout puts the blob in
+   front), so the 2D stream covers it and the 3D pour only shows below the tip, into the cup. */
+.su-pour__media {
+  position: relative;
+  block-size: calc(var(--_top) + var(--_vh));
+}
+.su-pour__video {
+  position: absolute;
+  inset-block-start: var(--_top);
+  inset-inline-start: calc(var(--_tip-x) - var(--_vw) * 0.587);
+  inline-size: var(--_vw);
+  block-size: var(--_vh);
+  object-fit: contain;
+  /* fade the right and bottom edges: video colours can decode a hair off the page cream */
+  -webkit-mask-image: linear-gradient(to left, transparent, var(--ink) 14%), linear-gradient(to top, transparent, var(--ink) 4%);
+  -webkit-mask-composite: source-in;
+  mask-image: linear-gradient(to left, transparent, var(--ink) 14%), linear-gradient(to top, transparent, var(--ink) 4%);
+  mask-composite: intersect;
+}
+
+/* copy column (right side of the drawing in both languages) */
+.su-pour__copy {
+  position: relative;      /* above the video's cream right-hand side */
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--space-3);
+  padding-block: 4cqi var(--space-6);
+  padding-inline: var(--space-2) var(--gutter);
+}
+.su-pour__copy[dir="rtl"] { padding-inline: var(--gutter) var(--space-2); }
+
+.su-pour__heading { margin: 0; }
+.su-pour__title {
+  display: block;
+  font-family: var(--font-display);
+  font-weight: var(--fw-black);
+  font-size: 14cqi;
+  line-height: 1;
+  color: var(--pink);
+}
+.su-pour__line {
+  display: block;
+  margin-block-start: var(--space-1);
+  font-family: var(--font-display);
+  font-weight: var(--fw-bold);
+  font-size: 7.5cqi;
+  line-height: var(--lh-display);
+  color: var(--choc-1);
+}
+.su-pour__title { white-space: nowrap; }
+/* English words run longer than the Arabic: one step smaller so the column stays calm at 360px */
+.su-pour__copy[lang="en"] .su-pour__title { font-family: var(--font-latin); font-size: 11cqi; }
+.su-pour__copy[lang="en"] .su-pour__line { font-family: var(--font-latin); font-size: 5.6cqi; }

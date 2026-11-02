@@ -1,0 +1,53 @@
+/* blob — sketch Pages 2–3: ONE pink blob, the owner's own painted layer (assets/img/blob-tagline.png)
+   with the Arabic tagline painted in. Its left drip pours into the cup video of the pour scene below
+   (the old drawn stream, blob-top-stream.svg, is no longer shown: the owner asked for it to go).
+   Rules: natural aspect ratio, never stretched, never recoloured.
+
+   blob-tagline.png is a 3240×4050 canvas; the painting fills x 539–2065, y 1731–3096 of it (a
+   phone-width frame, flush left and right). .su-blob__main is a window of exactly that box
+   (1527×1366) and the full image sits inside it, scaled so the painting's width = the page width.
+   Below y 3096 the canvas holds only a few near-invisible specks, which the window leaves out.
+   The section is laid out left-to-right in both languages (the drawing does not mirror). */
+
+.su-blob {
+  container-type: inline-size;       /* the English tagline's size + position follow the width (cqi) */
+  overflow-x: clip;
+}
+
+/* main sits on top of the pour scene's video (02-layout puts the blob in front) */
+.su-blob__main {
+  position: relative;
+  z-index: 1;
+  aspect-ratio: 1527 / 1366;
+  overflow: hidden;
+}
+
+.su-blob__art {
+  position: absolute;
+  inset-block-start: calc(-100% * 1731 / 1366);
+  inset-inline-start: calc(-100% * 539 / 1527);
+  display: block;
+  inline-size: calc(100% * 3240 / 1527);
+  max-inline-size: none;
+  block-size: auto;
+  aspect-ratio: 3240 / 4050;
+}
+
+/* The Arabic tagline is painted into the artwork. In English the live English line sits in the plain
+   pink band under the painted words, centred. (In Arabic blob.js hides this line.) */
+.su-blob__words {
+  position: absolute;
+  inset-block-start: 62cqi;
+  inset-inline: 8cqi;
+}
+
+.su-blob__tagline {
+  margin: 0;
+  color: var(--card);
+  font-family: var(--font-latin);
+  font-weight: var(--fw-black);
+  font-size: 6cqi;
+  line-height: 1.1;
+  text-align: center;
+  text-shadow: 0 0.05em 0 color-mix(in srgb, var(--pink-text) 55%, transparent);
+}

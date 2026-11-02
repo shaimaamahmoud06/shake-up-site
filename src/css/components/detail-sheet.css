@@ -1,0 +1,179 @@
+/* detail-sheet — the bottom sheet a flavour row opens: photo placeholder, name, price pills (1 / 2),
+   board description, add-ons. A native <dialog>: closed (not drawn) by default; when open it sits at
+   the bottom of the screen above a dimmed page, which is locked from scrolling only while it is open. */
+
+.su-detail-sheet {
+  position: fixed;
+  inset-block: auto 0;
+  inset-inline: 0;
+  margin-inline: auto;
+  margin-block-end: 0;
+  inline-size: min(100%, var(--content-max));
+  max-inline-size: 100%;
+  max-block-size: 88svh;
+  padding: 0;
+  border: 0;
+  border-start-start-radius: var(--r-lg);
+  border-start-end-radius: var(--r-lg);
+  background: var(--card);
+  color: var(--ink);
+  overflow-y: auto;
+  overscroll-behavior: contain;   /* scrolling inside the sheet never scrolls the page behind */
+}
+.su-detail-sheet::backdrop { background: color-mix(in srgb, var(--ink) 45%, transparent); }
+
+/* page behind: locked only while the sheet is open (no JS involved, so it can never get stuck) */
+html:has(.su-detail-sheet[open]) { overflow: hidden; }
+
+.su-detail-sheet__panel {
+  --_accent: var(--accent-shakes);
+  position: relative;
+  padding-block: var(--space-2) var(--space-6);
+}
+.su-detail-sheet__panel[data-world="drinks"] { --_accent: var(--accent-drinks); }
+.su-detail-sheet__panel[data-world="desserts"] { --_accent: var(--accent-desserts); }
+
+/* the little bar that says "you can pull this down" */
+.su-detail-sheet__grip {
+  inline-size: 2.5rem;
+  block-size: 0.3125rem;
+  margin: 0 auto var(--space-2);
+  border-radius: var(--r-pill);
+  background: color-mix(in srgb, var(--ink) 18%, transparent);
+}
+
+.su-detail-sheet__close {
+  position: absolute;
+  z-index: 1;
+  inset-block-start: var(--space-5);
+  inset-inline-end: var(--space-5);
+  display: grid;
+  place-items: center;
+  inline-size: 2.75rem;
+  block-size: 2.75rem;
+  padding: 0;
+  border: 0;
+  border-radius: var(--r-pill);
+  background: var(--card);
+  box-shadow: 0 0.0625rem 0.25rem color-mix(in srgb, var(--ink) 18%, transparent);
+  color: var(--ink);
+  font-size: var(--fs-base);
+  cursor: pointer;
+}
+.su-detail-sheet__close:focus-visible { outline: 0.125rem solid var(--ink); outline-offset: 0.125rem; }
+
+/* photo placeholder: the world's colour wash, same family as the category header card */
+.su-detail-sheet__photo {
+  display: grid;
+  place-items: center;
+  aspect-ratio: 16 / 9;
+  margin-inline: var(--space-3);
+  border-radius: var(--r-md);
+  background:
+    radial-gradient(120% 140% at 100% 0%, color-mix(in srgb, var(--_accent) 18%, var(--bg)), transparent 60%),
+    linear-gradient(160deg, color-mix(in srgb, var(--_accent) 16%, var(--bg)), color-mix(in srgb, var(--_accent) 42%, var(--bg)));
+}
+.su-detail-sheet__photo-label {
+  padding: 0.125rem var(--space-2);
+  border: 0.0625rem dashed color-mix(in srgb, var(--ink) 25%, transparent);
+  border-radius: var(--r-pill);
+  font-size: var(--fs-xs);
+  line-height: var(--lh-item);
+  color: var(--ink-2-tint);
+}
+
+.su-detail-sheet__body {
+  display: grid;
+  gap: var(--space-3);
+  padding-inline: var(--space-5);
+  padding-block-start: var(--space-4);
+}
+
+/* Latin names (SUNRISE) use Baloo 2; Arabic letters fall through to Tajawal */
+.su-detail-sheet__name {
+  justify-self: start;
+  margin: 0;
+  font-family: var(--font-latin);
+  font-weight: var(--fw-bold);
+  font-size: var(--fs-xl);
+  line-height: var(--lh-display);
+}
+.su-detail-sheet__desc {
+  justify-self: start;
+  margin: 0;
+  font-family: var(--font-ar);
+  font-size: var(--fs-base);
+  line-height: var(--lh-item);
+  color: var(--ink-2);
+}
+
+.su-detail-sheet__pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  margin: var(--space-1) 0 0;
+  padding: 0;
+  list-style: none;
+}
+.su-detail-sheet__pill {
+  display: inline-flex;
+  align-items: baseline;
+  gap: var(--space-2);
+  padding: var(--space-2) var(--space-4);
+  border-radius: var(--r-pill);
+  box-shadow: inset 0 0 0 0.0625rem color-mix(in srgb, var(--ink) 14%, transparent);
+}
+/* the size the toggle is on */
+.su-detail-sheet__pill[data-current="true"] {
+  background: color-mix(in srgb, var(--_accent) 14%, var(--card));
+  box-shadow: inset 0 0 0 0.125rem var(--_accent);
+}
+.su-detail-sheet__pill-size {
+  font-size: var(--fs-sm);
+  color: var(--ink-2);
+}
+.su-detail-sheet__pill-size:lang(en) { font-family: var(--font-latin); }
+.su-detail-sheet__pill-price {
+  font-family: var(--font-price);
+  font-weight: var(--fw-bold);
+  font-size: var(--fs-md);
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.su-detail-sheet__addons {
+  display: grid;
+  gap: var(--space-2);
+  margin-block-start: var(--space-3);
+  padding-block-start: var(--space-4);
+  border-block-start: 0.0625rem solid color-mix(in srgb, var(--ink) 8%, transparent);
+}
+.su-detail-sheet__addons-title {
+  margin: 0;
+  font-family: var(--font-ar);
+  font-weight: var(--fw-bold);
+  font-size: var(--fs-base);
+  line-height: var(--lh-item);
+}
+.su-detail-sheet__addons-title:lang(en) { font-family: var(--font-latin); }
+.su-detail-sheet__addon-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.su-detail-sheet__addon {
+  padding: var(--space-1) var(--space-3);
+  border-radius: var(--r-pill);
+  background: color-mix(in srgb, var(--ink) 5%, var(--card));
+  font-family: var(--font-ar);
+  font-size: var(--fs-sm);
+  line-height: var(--lh-item);
+}
+.su-detail-sheet__addons-ask {
+  margin: 0;
+  font-size: var(--fs-xs);
+  color: var(--ink-2);
+}

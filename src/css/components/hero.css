@@ -1,0 +1,137 @@
+/* hero — sketch Page 1: the journey clip (outside → the cafe interior), driven by scrolling: with
+   data-scrub (hero.js) the hero is a tall track and its frame stays pinned while the clip runs, then
+   the page carries on. Without it (reduced motion, no video) it is one plain screen. It fills the whole
+   first screen; the clip covers it (cropped at the edges, never stretched). Phones and
+   upright screens get the 9:16 cut, landscape screens 40rem+ the 16:9 cut (hero.js picks the file),
+   so the crop stays small. The box's size never depends on the media, so nothing jumps when the
+   video or poster arrives. Until the files arrive, a labelled placeholder shows.
+   On top: the small logo (top left) and one white line, both over a soft dark fade from the top
+   edge. The clip has no part that stays dark from 3 s to its end (its brightest moments reach
+   130–200 of 255 everywhere), so the fade is what keeps them readable on every frame. */
+
+.su-hero { position: relative; }
+/* the scroll track: 1 screen of hero + 1.6 screens of scrolling that run the clip */
+.su-hero[data-scrub] { block-size: 260svh; }
+.su-hero[data-scrub] .su-hero__frame { position: sticky; inset-block-start: 0; }
+
+.su-hero__frame {
+  position: relative;
+  inline-size: 100%;
+  block-size: 100svh;   /* the top bar is hidden while the hero is on screen (top-bar.css) */
+  overflow: hidden;
+  background: var(--card);
+}
+
+/* The bottom edge melts into the page background, so the hero runs into the blob below with no hard
+   line. Shown as is without the motion layer; 90-motion.css starts it hidden and brings it in as the
+   hero scrolls away. */
+.su-hero__frame::after {
+  content: "";
+  position: absolute;
+  inset-inline: 0;
+  inset-block-end: 0;
+  z-index: 1;
+  block-size: 35%;
+  background: linear-gradient(to bottom, transparent, color-mix(in srgb, var(--bg) 70%, transparent) 55%, var(--bg));
+  pointer-events: none;
+}
+
+/* the soft dark fade behind the logo and the line: the teal / pink ceiling of the clip, darker */
+.su-hero__frame::before {
+  content: "";
+  position: absolute;
+  inset-inline: 0;
+  inset-block-start: 0;
+  z-index: 1;
+  block-size: 42%;
+  background: linear-gradient(to bottom,
+    color-mix(in srgb, var(--ink) 72%, transparent),
+    color-mix(in srgb, var(--ink) 55%, transparent) 45%,
+    transparent);
+  pointer-events: none;
+}
+
+/* the logo: small, at the top left in both languages; fixed while the hero is the page you are on */
+.su-hero-logo {
+  position: fixed;
+  inset-block-start: max(var(--space-3), env(safe-area-inset-top));
+  inset-inline-start: max(var(--gutter), env(safe-area-inset-left));   /* the left: the img is dir="ltr" */
+  z-index: 21;
+  inline-size: clamp(4.5rem, 22vw, 7rem);
+  block-size: auto;
+  /* shown only while the hero is on screen (hero.js sets data-at-hero); otherwise up out of sight */
+  visibility: hidden;
+  transform: translateY(calc(-100% - 2rem));
+}
+:root[data-at-hero] .su-hero-logo { visibility: visible; transform: none; }
+
+/* the «scroll down» cue: a small mouse and the words, white, at the bottom centre, on a soft dark
+   glow (the clip is bright there too). It goes once you start scrolling. */
+.su-hero__cue {
+  position: absolute;
+  inset-inline: 0;
+  inset-block-end: max(var(--space-6), env(safe-area-inset-bottom));
+  z-index: 2;
+  display: grid;
+  justify-items: center;
+  gap: var(--space-2);
+  margin-inline: auto;
+  inline-size: max-content;
+  padding: var(--space-3) var(--space-5);
+  color: var(--card);
+  background: radial-gradient(closest-side, color-mix(in srgb, var(--ink) 50%, transparent), transparent);
+  pointer-events: none;
+}
+.su-hero__mouse { inline-size: 1.5rem; block-size: 2.25rem; }
+.su-hero__cue-text {
+  font-family: var(--font-ar);
+  font-weight: var(--fw-bold);
+  font-size: var(--fs-sm);
+  line-height: 1;
+  text-shadow: 0 0.0625rem 0.5rem color-mix(in srgb, var(--ink) 60%, transparent);
+}
+.su-hero__cue-text:lang(en) { font-family: var(--font-latin); }
+.su-hero[data-moved] .su-hero__cue { visibility: hidden; }
+
+/* the line: white Almarai Bold, under the logo, in the dark fade */
+.su-hero__line {
+  position: absolute;
+  inset-inline: var(--gutter);
+  inset-block-start: calc(max(var(--space-3), env(safe-area-inset-top)) + clamp(4.5rem, 22vw, 7rem) * 312 / 360 + var(--space-4));
+  z-index: 2;
+  margin: 0;
+  font-family: var(--font-hero);
+  font-weight: var(--fw-bold);
+  font-size: clamp(1.625rem, 7.5vw, 2.75rem);
+  line-height: 1.4;
+  letter-spacing: var(--ls-ar);
+  color: var(--card);
+  text-align: start;
+  text-shadow: 0 0.0625rem 0.75rem color-mix(in srgb, var(--ink) 60%, transparent);
+}
+/* before 3 s into the clip (hero.js): not shown yet */
+.su-hero[data-line="wait"] .su-hero__line { visibility: hidden; }
+
+.su-hero__media {
+  position: absolute;
+  inset: 0;
+  display: block;
+  inline-size: 100%;
+  block-size: 100%;
+  object-fit: cover;
+}
+
+/* asset placeholder (removed by hero.js once real media is configured) */
+.su-hero__placeholder {
+  position: absolute;
+  inset: var(--space-4);
+  display: grid;
+  place-content: center;
+  gap: var(--space-1);
+  border: 0.0625rem dashed color-mix(in srgb, var(--ink) 25%, transparent);
+  border-radius: var(--r-lg);
+  color: var(--ink-2);
+  font-size: var(--fs-xs);
+  line-height: var(--lh-item);
+  text-align: center;
+}

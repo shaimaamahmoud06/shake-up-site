@@ -1,0 +1,60 @@
+/* top-bar — the slim bar that never moves: logo + the three world links.
+   Its tint follows the world in view (data-world, set by topBar.js). With no JS it stays pink.
+   The logo is a live wordmark until the white logo SVG arrives (asset placeholder). */
+
+/* Fixed at the top, so hiding it on the hero leaves no gap there: while the hero is the page you are
+   on (data-at-hero, hero.js) the bar is away and the hero's own small logo stands in for it. */
+.su-top-bar {
+  --_accent: var(--accent-shakes);
+  position: fixed;
+  inset-block-start: 0;
+  inset-inline: 0;
+  z-index: 20;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+  block-size: var(--topbar-h);
+  padding-inline: var(--gutter);
+  background: var(--bg);
+  background: color-mix(in srgb, var(--_accent) 14%, var(--bg));
+  box-shadow: inset 0 -0.125rem 0 var(--_accent);
+}
+:root[data-at-hero] .su-top-bar { visibility: hidden; transform: translateY(-100%); }
+.su-top-bar[data-world="drinks"] { --_accent: var(--accent-drinks); }
+.su-top-bar[data-world="desserts"] { --_accent: var(--accent-desserts); }
+
+/* Dark ink on the light tint: a white logo on cream would vanish (bug caught once). */
+.su-top-bar__logo {
+  font-family: var(--font-display);
+  font-weight: var(--fw-black);
+  font-size: var(--fs-lg);
+  line-height: 1;
+  color: var(--ink);
+  text-decoration: none;
+  white-space: nowrap;
+}
+:root:lang(en) .su-top-bar__logo { font-family: var(--font-latin); }
+
+.su-top-bar__worlds { display: flex; gap: var(--space-1); }
+.su-top-bar__world {
+  display: inline-flex;
+  align-items: center;
+  block-size: 2.25rem;
+  padding-inline: var(--space-3);
+  border-radius: var(--r-pill);
+  font-weight: var(--fw-bold);
+  font-size: var(--fs-sm);
+  line-height: 1;
+  color: var(--ink-2-tint);
+  text-decoration: none;
+  white-space: nowrap;
+}
+.su-top-bar__world[aria-current="true"] {
+  color: var(--ink);
+  background: color-mix(in srgb, var(--_accent) 32%, var(--bg));
+}
+.su-top-bar__world:focus-visible, .su-top-bar__logo:focus-visible {
+  outline: 0.125rem solid var(--ink);
+  outline-offset: 0.125rem;
+}
