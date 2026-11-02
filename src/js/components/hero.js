@@ -4,9 +4,9 @@
    - Scroll-driven (owner, 2 Nov 2026): the hero is a tall track (data-scrub, hero.css) in which the
      frame stays pinned while the clip runs forward as you scroll down and backward as you scroll up
      (outside → the cafe interior); then the page carries on. It never plays by itself.
-     The clip is loaded whole into memory first (a blob), so it can jump to any moment on any server;
-     both cuts are encoded with a keyframe on every frame, so each step is one quick decode. Until it
-     has loaded, the first-frame still (the outside) shows.
+     The clip loads straight from its file and the browser jumps through it natively (the hosting
+     serves byte ranges); both cuts are encoded with a keyframe on every frame, so each step is one
+     quick decode. Until it paints, the first-frame still (the outside) shows as a plain picture.
    - Reduced motion: the last-frame still only (the interior), no video, no tall track.
    - Video fails to load: swapped for the last-frame still, no tall track.
    - Its one line (index.html) shows once the clip is 3 s in; with no video it simply shows.
@@ -99,23 +99,29 @@
     function still() { frame.insertBefore(posterImage(media.poster), frame.firstChild); }
     if (reduced || !media.video) { if (media.poster) still(); return; }
 
+    /* The first frame as a plain picture under the video, from the first moment: the frame is
+       never blank while the clip loads, and if the clip cannot play this is what stays. */
+    var under = null;
+    if (media.first) { under = posterImage(media.first); frame.insertBefore(under, frame.firstChild); }
     var video = SU.h('video', { 'class': 'su-hero__media', playsinline: '', muted: '', preload: 'auto', 'aria-hidden': 'true' });
     if (media.first) video.setAttribute('poster', media.first);
     video.muted = true;
     video.addEventListener('error', function () {          // blocked / missing / unsupported → the still
       if (!video.parentNode) return;
       video.remove();
+      if (under) under.remove();
       hero.removeAttribute('data-scrub');
       hero.removeAttribute('data-line');
       if (media.poster) still();
     });
-    frame.insertBefore(video, frame.firstChild);
+    frame.insertBefore(video, under ? under.nextSibling : frame.firstChild);
     hero.setAttribute('data-scrub', '');
     timeLine(video);
     scrub(video);
-    /* the whole clip into memory: seekable everywhere (a plain server does not allow jumping) */
-    fetch(media.video).then(function (r) { if (!r.ok) throw r; return r.blob(); })
-      .then(function (b) { video.src = URL.createObjectURL(b); }, function () { video.src = media.video; });
+    /* The clip loads straight from its file: the hosting serves byte ranges, so the browser can
+       jump to any moment natively. (An earlier version fetched the whole file into a blob first;
+       iOS Safari left the frame blank on that path, so it was removed — 2 Nov 2026.) */
+    video.src = media.video;
   }
 
   SU.hero = {
